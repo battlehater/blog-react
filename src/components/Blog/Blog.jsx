@@ -7,6 +7,7 @@ import { UserModal } from "../UserModal";
 export const Blog = (props) => {
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -37,10 +38,10 @@ export const Blog = (props) => {
       <h1 className="blog-title">Blog</h1>
       <div className="blog-posts">
         {posts.map((post) => {
-          return <Post post={post} user={getUserById(post.userId)} />;
+          return <Post key={post.id} post={post} user={getUserById(post.userId)} onUserClick={setSelectedUser} />;
         })}
       </div>
-      <UserModal />
+      <UserModal user={selectedUser} open={Boolean(selectedUser)} onClose={() => setSelectedUser(null)} />
     </section>
   );
 };
